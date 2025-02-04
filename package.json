@@ -9,17 +9,27 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
+    "dayjs": "^1.11.13",
+    "jotai": "^2.11.3",
+    "next": "13.5.7",
     "react": "^18",
+    "react-calendar": "^5.1.0",
     "react-dom": "^18",
-    "next": "13.5.7"
+    "react-icons": "^5.4.0",
+    "swiper": "^11.2.2"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10",
     "postcss": "^8",
-    "tailwindcss": "^3"
-  }
+    "tailwindcss": "^3",
+    "typescript": "^5"
+  },
+  "main": "index.js",
+  "author": "googoocone1 <googoocone1@naver.com>",
+  "license": "MIT"
 }
