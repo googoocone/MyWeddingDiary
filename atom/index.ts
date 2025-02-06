@@ -12,7 +12,7 @@ import { atom } from "jotai";
 export const detailFilterState = atom<DetailFilterType | null>(null);
 
 // 전역적으로 선택된 지역을 관리하는 상태
-export const selectedLocationAtom = atom<LocationType | string>("지역");
+export const selectedLocationAtom = atom<LocationType | string>("서울");
 
 // 전역적으로 선택된 서브 지역을 관리하는 상태
 export const selectedSubLocationAtom = atom<string>("상세지역");
@@ -28,6 +28,6 @@ export const selectedFlowerTypeAtom = atom<FlowerFilterType | string>(
 );
 
 // 전역적으로 선택된 최소 보증인원 타입을 관리하는 상태
-export const selectedMinGuaranteeTypeAtom = atom<MinGuaranteeType | number>(
+export const selectedMinGuaranteeTypeAtom = atom<MinGuaranteeType | string>(
   "보증인원"
 );

@@ -15,7 +15,7 @@ import {
   hallTypeData,
   flowerTypeData,
   minGuaranteeData,
-  minGuaranteeType,
+  MinGuaranteeType,
 } from "@/interface";
 
 export default function FilterPage() {
@@ -223,12 +223,12 @@ const MinGuaranteeFilter = ({ detailFilter, setDetailFilter }: any) => {
             <li
               key={data}
               onClick={() => {
-                setMinGuaranteeTypeValue(data as minGuaranteeType);
+                setMinGuaranteeTypeValue(data as MinGuaranteeType);
                 setDetailFilter(null);
               }}
               className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
             >
-              {data}
+              {data}명
             </li>
           ))}
         </ul>
