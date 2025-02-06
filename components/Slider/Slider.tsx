@@ -35,7 +35,7 @@ export default function Slider() {
       <SwiperSlide>
         <div className="w-full h-full">
           <img
-            src="/slide33.png"
+            src="/slide11.png"
             className="w-full h-full object-cover rounded-lg"
           />
         </div>

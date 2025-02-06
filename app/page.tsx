@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <div className="min-w-[1240px] bg-white w-full h-full p-2 sm:p-10 flex flex-col sm:flex-row gap-10 mt-12 sm:mt-0">
-      <div className="w-full sm:w-3/5 sm:min-w-[800px] flex flex-col gap-10">
+      <div className="w-full  sm:w-3/5 sm:min-w-[800px] flex flex-col gap-10">
         <div className="flex flex-col sm:flex-row rounded-xl shadow-xl w-full h-[530px] sm:h-[57%]">
           <Calendar data={testData} onMonthChange={setSelectedMonth} />
           <Todo data={testData} selectedMonth={selectedMonth} />
@@ -22,8 +22,8 @@ export default function Home() {
           <div></div>
         </div>
       </div>
-      <div className="border-2 rounded-xl w-full sm:w-2/5 sm:min-w-[300px] h-full">
-        <div className="h-[500px]"></div>
+      <div className="border-2 rounded-xl w-full w-[400px] sm:min-w-[300px] h-full">
+        <div className="w-[400px]"></div>
       </div>
     </div>
   );
