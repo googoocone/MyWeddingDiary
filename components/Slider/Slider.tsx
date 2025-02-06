@@ -4,6 +4,7 @@ import "swiper/css";
 export default function Slider() {
   return (
     <Swiper
+      loop={true}
       centeredSlides={true}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
@@ -27,6 +28,14 @@ export default function Slider() {
         <div className="w-full h-full">
           <img
             src="/slide2.png"
+            className="w-full h-full object-cover rounded-lg"
+          />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="w-full h-full">
+          <img
+            src="/slide33.png"
             className="w-full h-full object-cover rounded-lg"
           />
         </div>
