@@ -19,16 +19,15 @@ export interface FilterProps {
 }
 
 // 지역 타입 수정 ("전체" 추가)
-export type LocationType =  "서울" | "경기" | "부산";
+export type LocationType = "서울" | "경기도" | "부산";
 
 // 세부 지역 타입 수정 ("전체" 추가)
 export type SubLocationType = Record<LocationType, string[]>;
 
 export const locationData: SubLocationType = {
-
-  서울: [ "강남구", "강동구", "송파구", "서초구", "신촌구", "관악구"],
-  부산: [ "해운대구", "서면구", "연제구", "동래구", "남포구"],
-  경기: [ "수원시", "화성시", "평택시", "안성시", "안산시"],
+  서울: ["강남구", "강동구", "송파구", "서초구", "신촌구", "관악구"],
+  부산: ["해운대구", "서면구", "연제구", "동래구", "남포구"],
+  경기도: ["수원시", "화성시", "평택시", "안성시", "안산시"],
 };
 
 // Modal의 isOpen 상태 관리
@@ -39,15 +38,15 @@ export interface IsOpenProps {
 
 // 웨딩홀 타입 수정 ("전체" 추가)
 export type HallTypeFilterType =
-  | "convention"
-  | "house"
-  | "chapple"
-  | "hotel"
-  | "garden"
-  | "outside";
+  | "컨벤션 홀"
+  | "하우스 웨딩"
+  | "채플"
+  | "호텔 웨딩"
+  | "가든 웨딩"
+  | "야외 웨딩";
 
 // 웨딩홀 타입 데이터 수정 ("전체" 추가)
-export const hallTypeData: string[] = [
+export const hallTypeData: HallTypeFilterType[] = [
   "컨벤션 홀",
   "하우스 웨딩",
   "채플",
@@ -57,7 +56,7 @@ export const hallTypeData: string[] = [
 ];
 
 // 꽃 장식 타입 수정 ("전체" 추가)
-export type FlowerFilterType =  "전체" | "생화 장식식";
+export type FlowerFilterType = "전체" | "생화 장식식";
 
 // 꽃 장식 데이터 수정 ("전체" 추가)
 export const flowerTypeData: string[] = ["전체", "생화 장식"];
@@ -67,7 +66,6 @@ export type MinGuaranteeType = "150" | "200" | "250" | "300";
 
 // 최소 보증 인원 데이터 수정 ("전체" 추가)
 export const minGuaranteeData: MinGuaranteeType[] = [
-
   "150",
   "200",
   "250",

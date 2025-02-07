@@ -1,14 +1,11 @@
 import { useAtom } from "jotai";
 import {
-  detailFilterState,
   selectedFlowerTypeAtom,
-  selectedHallTypeAtom,
+  selectedHallTypeAtom, // 다중 선택: string[]
   selectedLocationAtom,
   selectedMinGuaranteeTypeAtom,
-  selectedSubLocationAtom,
+  selectedSubLocationAtom, // 다중 선택: string[]
 } from "@/atom";
-
-import { IoIosArrowDown } from "react-icons/io";
 import {
   locationData,
   LocationType,
@@ -16,223 +13,204 @@ import {
   flowerTypeData,
   minGuaranteeData,
   MinGuaranteeType,
+  HallTypeFilterType,
 } from "@/interface";
 
 export default function FilterPage() {
-  const [detailFilter, setDetailFilter] = useAtom(detailFilterState);
-
   return (
-    <div className="w-full h-[40px] flex justify-center items-center gap-4 mt-8">
-      <LocationFilter
-        detailFilter={detailFilter}
-        setDetailFilter={setDetailFilter}
-      />
-      <SubLocationFilter
-        detailFilter={detailFilter}
-        setDetailFilter={setDetailFilter}
-      />
-      <HallTypeFilter
-        detailFilter={detailFilter}
-        setDetailFilter={setDetailFilter}
-      />
-      <FlowerFilter
-        detailFilter={detailFilter}
-        setDetailFilter={setDetailFilter}
-      />
-      <MinGuaranteeFilter
-        detailFilter={detailFilter}
-        setDetailFilter={setDetailFilter}
-      />
+    <div className="w-[250px] px-4 border border-gray-200 rounded-xl flex flex-col">
+      <LocationFilter />
+      <SubLocationFilter />
+      <HallTypeFilter />
+      <FlowerFilter />
+      <MinGuaranteeFilter />
     </div>
   );
 }
 
-// 📌 LocationFilter
-const LocationFilter = ({ detailFilter, setDetailFilter }: any) => {
+// 📌 지역 (단일 선택 - 라디오 버튼)
+const LocationFilter = () => {
   const [locationValue, setLocationValue] = useAtom(selectedLocationAtom);
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          setDetailFilter(detailFilter === "location" ? null : "location"); // 다른 필터를 누르면 자동으로 닫힘
-        }}
-        className="px-3 py-1.5 bg-transparent border border-gray-300 focus:border-red-400 focus:text-red-400 rounded-full flex items-center justify-between gap-2"
-      >
-        {locationValue}
-        <IoIosArrowDown />
-      </button>
-
-      {detailFilter === "location" && (
-        <ul className="absolute z-10 left-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-          {Object.keys(locationData).map((location) => (
-            <li
-              key={location}
-              onClick={() => {
-                setLocationValue(location as LocationType);
-                setDetailFilter(null); // 선택하면 리스트 닫힘
-              }}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            >
-              {location}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="border-b border-b-gray-200 py-4">
+      <h3 className="text-lg font-semibold mb-2">지역 선택</h3>
+      <div className="flex flex-col gap-1">
+        {Object.keys(locationData).map((location) => (
+          <label
+            key={location}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <input
+              type="radio"
+              name="location"
+              value={location}
+              checked={locationValue === location}
+              onChange={() => setLocationValue(location as LocationType)}
+              className="appearance-none w-4 h-4 border border-gray-300 rounded-none cursor-pointer checked:bg-red-500 checked:border-transparent"
+            />
+            <span>{location}</span>
+          </label>
+        ))}
+      </div>
     </div>
   );
 };
 
-// 📌 SubLocationFilter
-const SubLocationFilter = ({ detailFilter, setDetailFilter }: any) => {
+// 📌 상세지역 (다중 선택 - 체크박스)
+const SubLocationFilter = () => {
   const [locationValue] = useAtom(selectedLocationAtom);
-  const [subLocationValue, setSubLocationValue] = useAtom(
+  const [selectedSubLocations, setSelectedSubLocations] = useAtom(
     selectedSubLocationAtom
   );
 
+  // 선택된 location에 따른 서브 로케이션 데이터 (없으면 빈 배열)
   const subLocations =
     locationValue in locationData
       ? locationData[locationValue as LocationType]
       : [];
 
-  return (
-    <div className="relative">
-      <button
-        className="px-3 py-1.5 bg-transparent border border-gray-300 rounded-full flex items-center justify-between w-[120px]"
-        onClick={() => {
-          setDetailFilter(
-            detailFilter === "subLocation" ? null : "subLocation"
-          );
-        }}
-      >
-        {subLocationValue}
-        <IoIosArrowDown />
-      </button>
+  if (subLocations.length === 0) return null;
 
-      {detailFilter === "subLocation" && subLocations.length > 0 && (
-        <ul className="absolute z-10 left-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-          {subLocations.map((subLocation) => (
-            <li
+  const toggleSubLocation = (subLocation: string) => {
+    if (selectedSubLocations.includes(subLocation)) {
+      // 이미 선택된 경우 제거
+      setSelectedSubLocations(
+        selectedSubLocations.filter((item: any) => item !== subLocation)
+      );
+    } else {
+      // 선택되지 않았다면 추가
+      setSelectedSubLocations([...selectedSubLocations, subLocation]);
+    }
+  };
+
+  return (
+    <div className="border-b border-b-gray-200 py-4">
+      <h3 className="text-md font-semibold mb-2">상세 지역</h3>
+      <div className="flex flex-col gap-1">
+        {subLocations.map((subLocation) => {
+          const isChecked = selectedSubLocations.includes(subLocation);
+          return (
+            <label
               key={subLocation}
-              onClick={() => {
-                setSubLocationValue(subLocation);
-                setDetailFilter(null);
-              }}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
-              {subLocation}
-            </li>
-          ))}
-        </ul>
-      )}
+              <input
+                type="checkbox"
+                name="subLocation"
+                value={subLocation}
+                checked={isChecked}
+                onChange={() => toggleSubLocation(subLocation)}
+                className="appearance-none w-4 h-4 border border-gray-300 rounded-none cursor-pointer checked:bg-red-500 checked:border-transparent"
+              />
+              <span>{subLocation}</span>
+            </label>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-// 📌 HallTypeFilter
-const HallTypeFilter = ({ detailFilter, setDetailFilter }: any) => {
-  const [hallTypeValue, setHallTypeValue] = useAtom(selectedHallTypeAtom);
+// 📌 홀타입 (다중 선택 - 체크박스)
+const HallTypeFilter = () => {
+  const [selectedHallTypes, setSelectedHallTypes] =
+    useAtom(selectedHallTypeAtom);
+
+  // 파라미터의 타입을 string이 아닌 HallTypeFilterType로 변경
+  const toggleHallType = (hallType: HallTypeFilterType) => {
+    if (selectedHallTypes.includes(hallType)) {
+      setSelectedHallTypes(
+        selectedHallTypes.filter((item) => item !== hallType)
+      );
+    } else {
+      setSelectedHallTypes([...selectedHallTypes, hallType]);
+    }
+  };
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          setDetailFilter(detailFilter === "hallType" ? null : "hallType");
-        }}
-        className="px-3 py-1.5 bg-transparent border border-gray-300 rounded-full flex items-center justify-between gap-2 w-[140px]"
-      >
-        {hallTypeValue}
-        <IoIosArrowDown />
-      </button>
-      {detailFilter === "hallType" && (
-        <ul className="absolute z-10 left-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-          {hallTypeData.map((hallType) => (
-            <li
+    <div className="border-b border-b-gray-200 py-4">
+      <h3 className="text-md font-semibold mb-2">웨딩홀 타입</h3>
+      <div className="flex flex-col gap-1">
+        {hallTypeData.map((hallType: HallTypeFilterType) => {
+          const isChecked = selectedHallTypes.includes(hallType);
+          return (
+            <label
               key={hallType}
-              onClick={() => {
-                setHallTypeValue(hallType as LocationType);
-                setDetailFilter(null);
-              }}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
-              {hallType}
-            </li>
-          ))}
-        </ul>
-      )}
+              <input
+                type="checkbox"
+                name="hallType"
+                value={hallType}
+                checked={isChecked}
+                onChange={() => toggleHallType(hallType)}
+                className="appearance-none w-4 h-4 border border-gray-300 rounded-none cursor-pointer checked:bg-red-500 checked:border-transparent"
+              />
+              <span>{hallType}</span>
+            </label>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-// 📌 FlowerFilter
-const FlowerFilter = ({ detailFilter, setDetailFilter }: any) => {
+// 📌 FlowerFilter (단일 선택 - 라디오 버튼)
+const FlowerFilter = () => {
   const [flowerTypeValue, setFlowerTypeValue] = useAtom(selectedFlowerTypeAtom);
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          setDetailFilter(detailFilter === "flower" ? null : "flower");
-        }}
-        className="px-3 py-1.5 bg-transparent border border-gray-300 rounded-full flex items-center justify-between gap-2 w-[120px]"
-      >
-        {flowerTypeValue}
-        <IoIosArrowDown />
-      </button>
-      {detailFilter === "flower" && (
-        <ul className="absolute z-10 left-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-          {flowerTypeData.map((flowerType) => (
-            <li
-              key={flowerType}
-              onClick={() => {
-                setFlowerTypeValue(flowerType as LocationType);
-                setDetailFilter(null);
-              }}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            >
-              {flowerType}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="border-b border-b-gray-200 py-4">
+      <h3 className="text-md font-semibold mb-2">꽃 장식</h3>
+      <div className="flex flex-col gap-1">
+        {flowerTypeData.map((flowerType) => (
+          <label
+            key={flowerType}
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <input
+              type="radio"
+              name="flowerType"
+              value={flowerType}
+              checked={flowerTypeValue === flowerType}
+              onChange={() => setFlowerTypeValue(flowerType)}
+              className="appearance-none w-4 h-4 border border-gray-300 rounded-none cursor-pointer checked:bg-red-500 checked:border-transparent"
+            />
+            <span>{flowerType}</span>
+          </label>
+        ))}
+      </div>
     </div>
   );
 };
 
-const MinGuaranteeFilter = ({ detailFilter, setDetailFilter }: any) => {
+// 📌 Minimum Guarantee (단일 선택 - 라디오 버튼)
+const MinGuaranteeFilter = () => {
   const [minGuaranteeTypeValue, setMinGuaranteeTypeValue] = useAtom(
     selectedMinGuaranteeTypeAtom
   );
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => {
-          setDetailFilter(
-            detailFilter === "minGuarantee" ? null : "minGuarantee"
-          );
-        }}
-        className="px-3 py-1.5  bg-transparent border border-gray-300 rounded-full flex items-center justify-between gap-2 w-[120px]"
-      >
-        {minGuaranteeTypeValue}
-        <IoIosArrowDown />
-      </button>
-      {detailFilter === "minGuarantee" && (
-        <ul className="absolute z-10 left-0 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg">
-          {minGuaranteeData.map((data) => (
-            <li
-              key={data}
-              onClick={() => {
-                setMinGuaranteeTypeValue(data as MinGuaranteeType);
-                setDetailFilter(null);
-              }}
-              className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            >
-              {data}명
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="py-4">
+      <h3 className="text-md font-semibold mb-2">최소 보증인원</h3>
+      <div className="flex flex-col gap-1">
+        {minGuaranteeData.map((data) => (
+          <label key={data} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="minGuarantee"
+              value={data}
+              checked={minGuaranteeTypeValue === data}
+              onChange={() =>
+                setMinGuaranteeTypeValue(data as MinGuaranteeType)
+              }
+              className="appearance-none w-4 h-4 border border-gray-300 rounded-none cursor-pointer checked:bg-red-500 checked:border-transparent"
+            />
+            <span>{data}명</span>
+          </label>
+        ))}
+      </div>
     </div>
   );
 };

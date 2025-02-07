@@ -1,53 +1,80 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Image from "next/image";
 
-export default function Slider() {
+export default function MySwiper() {
+  const slideStyle = {
+    width: "100%",
+    height: "100%",
+    background: "#eee",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "10px",
+  };
   return (
     <Swiper
       loop={true}
-      centeredSlides={true}
+      spaceBetween={50}
+      slidesPerView="auto" // 슬라이드 개별 크기를 그대로 사용
+      centeredSlides={true} // 가운데 슬라이드를 중앙에 위치
+      style={{ width: "100%" }} // Swiper 컨테이너는 전체 너비 사용
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
-      breakpoints={{
-        320: { slidesPerView: 1, spaceBetween: 30 }, // 모바일
-        768: { slidesPerView: 1.5, spaceBetween: 30 }, // 태블릿
-        1024: { slidesPerView: 1.8, spaceBetween: 30 }, // 데스크탑
-        1280: { slidesPerView: 2.2, spaceBetween: 30 }, // 대형 화면
-      }}
-      className="h-full"
     >
-      <SwiperSlide>
-        <div className="w-full h-full">
-          <img
-            src="/slide22.png"
-            className="w-full h-full object-cover rounded-lg"
-          />
+      <SwiperSlide style={{ width: "800px", height: "300px" }}>
+        <div style={slideStyle} className="relative">
+          <Image
+            className="rounded-xl"
+            src={"/slide11.png"}
+            alt="슬라이드1"
+            fill
+          ></Image>
         </div>
       </SwiperSlide>
-      <SwiperSlide>
-        <div className="w-full h-full">
-          <img
-            src="/slide2.png"
-            className="w-full h-full object-cover rounded-lg"
-          />
+      <SwiperSlide
+        style={{ width: "800px", height: "300px" }}
+        className="relative"
+      >
+        <div style={slideStyle}>
+          {" "}
+          <Image
+            className="rounded-xl"
+            src={"/slide2.png"}
+            alt="슬라이드1"
+            fill
+          ></Image>
         </div>
       </SwiperSlide>
-      <SwiperSlide>
-        <div className="w-full h-full">
-          <img
-            src="/slide11.png"
-            className="w-full h-full object-cover rounded-lg"
-          />
+      <SwiperSlide
+        style={{ width: "800px", height: "300px" }}
+        className="relative"
+      >
+        <div style={slideStyle}>
+          {" "}
+          <Image
+            className="rounded-xl"
+            src={"/slide22.png"}
+            alt="슬라이드1"
+            fill
+          ></Image>
         </div>
       </SwiperSlide>
-      <SwiperSlide>
-        <div className="w-full h-full">
-          <img
-            src="/slide33.png"
-            className="w-full h-full object-cover rounded-lg"
-          />
+      <SwiperSlide
+        style={{ width: "800px", height: "300px" }}
+        className="relative"
+      >
+        <div style={slideStyle}>
+          {" "}
+          <Image
+            className="rounded-xl"
+            src={"/slide33.png"}
+            alt="슬라이드1"
+            fill
+          ></Image>
         </div>
       </SwiperSlide>
+      {/* 필요한 만큼의 슬라이드 추가 */}
     </Swiper>
   );
 }

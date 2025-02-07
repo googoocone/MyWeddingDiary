@@ -29,11 +29,17 @@ export default function WeddingHallTour() {
     if (!hall.locationType.includes(locationValue)) return false;
 
     // 2. 세부 지역 필터: 기본값("상세지역")이 아니면 필터 적용.
-    if (subLocationValue !== "상세지역" && !hall.locationType.includes(subLocationValue))
+    if (
+      subLocationValue !== "상세지역" &&
+      !hall.locationType.includes(subLocationValue)
+    )
       return false;
 
     // 3. 웨딩홀 타입 필터: 기본값("웨딩홀 타입")이 아니면, hall.hallType 배열에 선택한 타입이 포함되어 있는지 확인.
-    if (hallTypeValue !== "웨딩홀 타입" && !hall.hallType.includes(hallTypeValue))
+    if (
+      hallTypeValue !== ["웨딩홀 타입"] &&
+      !hall.hallType.includes(hallTypeValue)
+    )
       return false;
 
     // 4. 꽃 장식 필터: 기본값("꽃 장식")이 아니면, hall.flower 배열에 선택한 값이 포함되어 있는지 확인.
@@ -42,14 +48,17 @@ export default function WeddingHallTour() {
 
     // 5. 최소 보증인원 필터: 기본값("보증인원")이 아니면, 선택한 값과 일치하는지 확인
     //    (필요에 따라 숫자 비교나 범위 비교로 수정 가능)
-    if (minGuaranteeValue !== "보증인원" && hall.minGuarantee >= Number(minGuaranteeValue))
+    if (
+      minGuaranteeValue !== "보증인원" &&
+      hall.minGuarantee >= Number(minGuaranteeValue)
+    )
       return false;
 
     return true;
   });
 
   return (
-    <div className="min-w-[1240px] h-full border">
+    <div className="min-w-[1240px] ">
       <div className="w-full h-[80px] flex justify-center items-center">
         <div className="text-2xl font-semibold mr-8">Hall Tour</div>
         <div className="w-[550px] h-[40px] relative">
@@ -60,16 +69,23 @@ export default function WeddingHallTour() {
           <AiOutlineSearch className="absolute right-4 top-2 text-2xl" />
         </div>
       </div>
-      <div className="min-w-[1240px] h-[330px] mt-5">
+      <div className="w-full h-[330px] mt-5">
         <Slider />
       </div>
-      <FilterPage />
-      <div className="w-[825px] mx-auto mt-8 gap-2 flex flex-wrap items-center justify-center">
-        {filteredHalls.length > 0 ? (
-          filteredHalls.map((hall) => <HallCard key={hall.id} data={hall} />)
-        ) : (
-          <div>조건에 맞는 웨딩홀이 없습니다.</div>
-        )}
+      <div className="w-[1400px] mx-auto flex items-start justify-center gap-12">
+        <div className="sticky top-8">
+          <FilterPage />
+        </div>
+        <div className="w-[800px] ">
+          <div className=" w-[800px] h-[40px] text-black border boder-gray-200 mb-4 rounded-xl flex items-center justify-center">
+            💕프리미엄 회원님은 다른 회원님들의 할인 받은 견적을 확인할 수
+            있어요!
+          </div>
+          {weddingHallList.map((hall) => (
+            <HallCard data={hall}></HallCard>
+          ))}
+        </div>
+        <div className="w-[250px] h-[500px] border border-gray-200 rounded-xl "></div>
       </div>
     </div>
   );
