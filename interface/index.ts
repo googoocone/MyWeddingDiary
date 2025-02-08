@@ -71,3 +71,7 @@ export const minGuaranteeData: MinGuaranteeType[] = [
   "250",
   "300",
 ];
+
+export interface paramsProps {
+  params: { id: string };
+}

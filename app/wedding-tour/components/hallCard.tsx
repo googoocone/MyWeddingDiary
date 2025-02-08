@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function HallCard({ data }: any) {
   return (
     <div className="mb-[15px] p-[15px] w-[800px] h-[270px] border border-gray-200 rounded-xl flex items-center justify-center">
       {/* group과 overflow-hidden을 적용하여 hover 시 이미지가 컨테이너 밖으로 넘치지 않게 함 */}
+
       <div className="w-[240px] h-[240px] relative group rounded-xl overflow-hidden">
         <Image
           fill
@@ -25,7 +27,11 @@ export default function HallCard({ data }: any) {
             {data.description}
           </div>
         </div>
-        <div></div>
+        <div>
+          <Link href={`/wedding-tour/${data.id}`}>
+            <button>링크 이동</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
