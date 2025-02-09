@@ -1,6 +1,6 @@
+import { PrismaClient } from "@prisma/client";
 import { paramsProps } from "@/interface";
 import PhotoSection from "../components/HallDetail/PhotoSection";
-import { weddingHallList } from "@/constants";
 import HeaderSection from "../components/HallDetail/HeaderSection";
 import BasicInfoSection from "../components/HallDetail/BasicInfoSection";
 import IncludedSection from "../components/HallDetail/IncludedSection";
@@ -8,13 +8,23 @@ import OptionSection from "../components/HallDetail/OptionSection";
 import HallInfoSection from "../components/HallDetail/HallInfoSection";
 import Calculator from "../components/HallDetail/Calculator";
 
-export default function WeddingHallDetailPage({ params }: paramsProps) {
+const prisma = new PrismaClient();
+
+async function getData(id: string) {
+  console.log("Fetching wedding hall with id:", id);
+
+  const weddingHall = await prisma.weddingHall.findUnique({
+    where: { id: id },
+  });
+
+  return weddingHall;
+}
+
+export default async function WeddingHallDetailPage({ params }: paramsProps) {
   const { id } = params;
 
-  // 단일 요소 찾기
-  const weddingHall = weddingHallList.find((hall) => hall.id === Number(id));
+  const weddingHall = await getData(id);
 
-  // weddingHall이 없을 경우의 예외 처리
   if (!weddingHall) {
     return <div>존재하지 않는 Wedding Hall 입니다.</div>;
   }

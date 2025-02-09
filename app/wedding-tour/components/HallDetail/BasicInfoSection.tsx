@@ -47,9 +47,7 @@ export default function BasicInfoSection({ data }: any) {
               보증인원
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.minGuarantee.map((minGuarantee: number, index: number) => (
-                <div key={index}>{minGuarantee}명 </div>
-              ))}
+              {data.minGuarantee}
             </div>
           </div>
           <div className="w-full flex items-center justify-between">
@@ -57,9 +55,7 @@ export default function BasicInfoSection({ data }: any) {
               주차대수
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.parking.map((parking: number, index: number) => (
-                <div key={index}>{parking}대</div>
-              ))}
+              {data.parking}
             </div>
           </div>
         </div>
@@ -101,16 +97,6 @@ export default function BasicInfoSection({ data }: any) {
                     </div>
                   )
                 )}
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-between">
-            <div className="w-[100px] flex-shrink-0 text-gray-500 self-start">
-              최대수용인원
-            </div>
-            <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.maxCapacity.map((maxCapacity: number, index: number) => (
-                <div key={index}>{maxCapacity}명</div>
-              ))}
             </div>
           </div>
         </div>
