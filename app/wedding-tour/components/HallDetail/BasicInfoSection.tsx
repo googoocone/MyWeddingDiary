@@ -4,7 +4,7 @@ export default function BasicInfoSection({ data }: any) {
       <div className="text-xl font-[600] mb-4">홀 상세정보</div>
       <div className="w-full flex items-center justify-center">
         {/* 이 부분이 기본정보의 요소들이 들어가는 부분 */}
-        <div className="w-[375px] h-[230px] flex flex-col items-start gap-4">
+        <div className="w-[375px] flex flex-col items-start gap-4">
           <div className="w-full flex items-center justify-between">
             <div className="w-[100px] flex-shrink-0 text-gray-500 self-start">
               예식시간
@@ -20,18 +20,25 @@ export default function BasicInfoSection({ data }: any) {
               홀종류
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.weddingHalls.map((hall: string, index: number) => (
-                <div key={index}>{hall}</div>
-              ))}
+              {Object.entries(data.weddingHalls).map(
+                ([hallName, price], index) => (
+                  <div key={index} className="flex items-center gap-1">
+                    <span>{hallName}</span>
+                  </div>
+                )
+              )}
             </div>
           </div>
+
           <div className="w-full flex items-center justify-between">
-            <div className="w-[100px] text-[justify] flex-shrink-0 text-gray-500 self-start">
+            <div className="w-[100px] flex-shrink-0 text-gray-500 self-start">
               식사종류
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.mealType.map((meal: string, index: number) => (
-                <div key={index}>{meal}</div>
+              {Object.entries(data.mealType).map(([mealType, price], index) => (
+                <div key={index} className="flex items-center gap-1">
+                  <span>{mealType}</span>
+                </div>
               ))}
             </div>
           </div>
@@ -70,9 +77,13 @@ export default function BasicInfoSection({ data }: any) {
               대관료
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.hallPrice.map((price: number, index: number) => (
-                <div key={index}>{price.toLocaleString()}만원, </div>
-              ))}
+              {Object.entries(data.weddingHalls).map(
+                ([hallName, price], index) => (
+                  <div key={index} className="flex items-center gap-1">
+                    <span>{price?.toLocaleString()}원</span>
+                  </div>
+                )
+              )}
             </div>
           </div>
           <div className="w-full flex items-center justify-between">
@@ -80,9 +91,16 @@ export default function BasicInfoSection({ data }: any) {
               식대
             </div>
             <div className="w-[275px] pl-[20px] flex flex-wrap items-center justify-start gap-2">
-              {data.mealPrice.map((mealPrice: number, index: number) => (
-                <div key={index}>{mealPrice.toLocaleString()}원, </div>
-              ))}
+              {data.mealType &&
+                Object.entries(data.mealType).map(
+                  ([mealName, price], index) => (
+                    <div key={index} className="flex items-center gap-1">
+                      <span>
+                        {mealName}: {price?.toLocaleString()}원
+                      </span>
+                    </div>
+                  )
+                )}
             </div>
           </div>
           <div className="w-full flex items-center justify-between">

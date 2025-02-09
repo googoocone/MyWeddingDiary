@@ -54,9 +54,7 @@ export default function PhotoSection({ data }: { data: any }) {
         </button>
       </div>
       <div className="flex w-full justify-between items-center px-4">
-        <div className="underline font-medium text-xs md:text-s mt-2">
-          {data.address}
-        </div>
+        <div className="underline font-medium text-xs md:text-s mt-2"></div>
         <div className="flex gap-2 text-xs md:text-sm mt-2">
           <button
             type="button"

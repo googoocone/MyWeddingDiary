@@ -4,6 +4,9 @@ import { weddingHallList } from "@/constants";
 import HeaderSection from "../components/HallDetail/HeaderSection";
 import BasicInfoSection from "../components/HallDetail/BasicInfoSection";
 import IncludedSection from "../components/HallDetail/IncludedSection";
+import OptionSection from "../components/HallDetail/OptionSection";
+import HallInfoSection from "../components/HallDetail/HallInfoSection";
+import Calculator from "../components/HallDetail/Calculator";
 
 export default function WeddingHallDetailPage({ params }: paramsProps) {
   const { id } = params;
@@ -19,10 +22,15 @@ export default function WeddingHallDetailPage({ params }: paramsProps) {
   return (
     <div className="mx-auto py-10 w-[1200px]">
       <PhotoSection data={weddingHall}></PhotoSection>
-      <div className="w-[750px] flex flex-col items-center justify-between">
-        <HeaderSection data={weddingHall}></HeaderSection>
-        <BasicInfoSection data={weddingHall}></BasicInfoSection>
-        <IncludedSection data={weddingHall}></IncludedSection>
+      <div className="w-full flex items-start justify-between">
+        <div className="w-[750px] flex flex-col items-center justify-between">
+          <HeaderSection data={weddingHall}></HeaderSection>
+          <BasicInfoSection data={weddingHall}></BasicInfoSection>
+          <IncludedSection data={weddingHall}></IncludedSection>
+          <OptionSection data={weddingHall}></OptionSection>
+          <HallInfoSection data={weddingHall}></HallInfoSection>
+        </div>
+        <Calculator></Calculator>
       </div>
     </div>
   );

@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WeddingHall {
+  id               String       @id @default(uuid())
+  title            String
+  tags             String[] // 배열 형태
+  images           String[] // 이미지 배열
+
+  name             String
+  description      String
+  locationType     String[] // ["서울", "강남구"]
+  hallType         String[] // ["컨벤션 홀", "가든 홀"]
+
+  weddingTime      String[] // 예식 시간 배열
+  weddingHalls     Json // {"리베라홀": 8000000, "르메르홀": 15000000}
+  mealType         Json // {"뷔페식": 70000, "호텔식": 100000}
+
+  minGuarantee     Int
+  parking          Int
+  weddingInterval  Int
+  maxCapacity      Int
+
+  photoTable       String
+  specialDirecting String[] // 특수 연출
+  weddingSupplies  String[] // 웨딩 용품
+  concierge        String[] // 안내 서비스
+  flower           String[] // 생화 장식
+
+  flowerPrice      Json
+  snapPhoto        Json
+  pyeback          Json
+  flowerWrapping   Json
+  flowerShower     Json
+  photoBooth       Json
+  officiant        Json
+  mc               Json
+  weddingSong      Json
+
+  benefit          Boolean
+  other            Json[] // 추가사항 (리스트)
+
+  address          String
+  tel              String
+  homePage         String
+  publicTransport  String
+}
