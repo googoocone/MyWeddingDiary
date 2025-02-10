@@ -57,3 +57,9 @@ model WeddingHall {
   homePage         String
   publicTransport  String
 }
+
+model admin {
+  id               String       @id @default(uuid())
+  email            String       @unique
+  password         String
+}
